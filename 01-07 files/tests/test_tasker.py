@@ -39,9 +39,18 @@ def test_reminder_exception_empty_tasklist():
 def test_reminder_complete_task_removes_list_entry():
     reminder = Reminder('Sam')
     reminder.remind_me_to('breathe')
+    reminder.remind_me_to('stretch')
     reminder.complete_task('breathe')
-    result = reminder.
-    with pytest.raises(Exception) as e:
-        reminder.
+    assert reminder.remind() == 'Here is your tasklist: stretch'
 # test complete task removes task from list
+def test_reminder_completing_non_task_throws_exception():
+    reminder = Reminder('Sam')
+    reminder.remind_me_to('breathe')
+    reminder.remind_me_to('stretch')
+    reminder.complete_task('breathe')
+    with pytest.raises(Exception) as e:
+        reminder.complete_task('breathe')
+    error_message = str(e.value)
+    assert error_message == 'That task is not on the task list!'
+
 # test returns exception if the task doesnt exist
