@@ -12,6 +12,8 @@ In tincidunt tellus ligula, quis aliquam tortor blandit ac. Pellentesque lectus 
 Vivamus at nisl id felis rhoncus ullamcorper eget et quam. Nam vulputate ante sit amet enim congue, id vehicula felis dapibus. Aliquam erat volutpat. Quisque eu interdum ligula. Quisque molestie nulla a nisl scelerisque, ac sagittis tellus vestibulum. Morbi sit amet aliquet libero. Aliquam vitae mauris id felis pretium varius et eu risus. Donec sed lorem nec ipsum consequat tempus mattis et libero. Pellentesque iaculis porttitor dui eu congue. Suspendisse potenti. Donec et posuere elit. Donec vestibulum rhoncus urna in elementum. Duis non ante ultricies, efficitur est varius, aliquam enim.
 Maecenas mattis purus eget nunc sollicitudin, at mollis lorem facilisis. Duis felis eros, luctus vitae accumsan eget, scelerisque quis velit. Nulla tincidunt lobortis ante sit amet tempor. In vel nunc non orci posuere laoreet. Donec imperdiet varius auctor. Vivamus venenatis lorem at tortor laoreet egestas. Ut maximus, eros ut luctus congue, eros dui molestie mauris, id aliquet urna elit at sem."""
 
+DIARY_ENTRY_4 = DIARY_ENTRY_3+' 07928 376489 and 07903 436258  and 07394 619283'
+
 def test_diary_add():
     diary = Diary()
     diary_entry = DiaryEntry("My Diary", "My first entry!")
@@ -66,7 +68,7 @@ def test_todo_complete():
 
     task.mark_complete()
 
-    assert task in todo_list.completed()
+    assert task in todo_list.complete()
 
 def test_todo_giveup():
     todo_list = TodoList()
@@ -90,4 +92,15 @@ def test_user_integration():
     assert user.diary == diary
     assert user.todo_list == todo_list
 
-    
+def test_user_finds_mobile_numbers():
+    diary = Diary()
+    diary_entry = DiaryEntry('mobile title', DIARY_ENTRY_4)
+    diary.add(diary_entry)
+    number_1 =  '07928 376489'  
+    number_2 =   '07903 436258'
+    number_3 =  '07394 619283'
+    phone_numbers = diary.get_phone_numbers()
+
+    assert number_1 in phone_numbers
+    assert number_2 in phone_numbers
+    assert number_3 in phone_numbers
